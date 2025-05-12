@@ -16,7 +16,7 @@ export default function Login() {
   };
 
   return (
-    <form onSubmit={handleLogin}>
+    <form className="w-1/3 flex flex-col gap-1" onSubmit={handleLogin}>
       <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" />
       <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
       <button type="submit">Login</button>
