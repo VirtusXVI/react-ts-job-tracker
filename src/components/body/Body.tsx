@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import Modal from './Modal';
+import Modal from '../modal/Modal';
+import { useLogin } from '../../context/LoginContext';
 
 export default function Body() {
+    const { openLoginModal } = useLogin();
     const [openFilters, setOpenFilters] = useState<Boolean>(false);
     const [appliedFilters, setAppliedFilters] = useState<String[]>([]);
 
@@ -10,6 +12,7 @@ export default function Body() {
     <div className='bg-white dark:bg-black h-lvh overflow-y-auto w-dvw text-black dark:text-white px-2 lg: pt-15'>
 
         {openFilters ? <Modal type='Filter' appliedFilters={appliedFilters} setAppliedFilters={setAppliedFilters} setOpenFilters={setOpenFilters}/> : null}
+        {openLoginModal ? <Modal type='Login'/> : null}
 
         {/* Filter Section */}
         <span className='grid justify-end mb-2'>

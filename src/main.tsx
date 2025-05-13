@@ -3,11 +3,14 @@ import './index.css'
 import App from './App.tsx'
 import { AuthProvider } from './context/AuthContext.tsx'
 import { ThemeProvider } from './context/ThemeContext.tsx'
+import { LoginProvider } from './context/LoginContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  <AuthProvider>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
-  </AuthProvider>,
+	<AuthProvider>
+		<ThemeProvider>
+			<LoginProvider>
+				<App />
+			</LoginProvider>
+		</ThemeProvider>
+	</AuthProvider>,
 )
