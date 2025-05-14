@@ -1,4 +1,5 @@
 import FilterModal from "./FilterModal";
+import JobDesctiptionDetail from "./JobDesctiptionDetail";
 import LoginModal from "./LoginModal";
 
 type ModalProps = {
@@ -18,6 +19,9 @@ export default function Modal(props: ModalProps) {
             break;
             case 'Login':
                 return <LoginModal type='Login'/>;
+            break;
+            case 'Detail':
+                return <JobDesctiptionDetail type='Detail'/>;
             break;
         }
     };

@@ -1,18 +1,44 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Modal from '../modal/Modal';
 import { useLogin } from '../../context/LoginContext';
+import { useDetail } from '../../context/DetailContext';
+import type { JobType } from '../../types/JobType';
+import JobCard from './JobCard';
+import { db } from '../../firebase';
+import { getDocs, collection } from 'firebase/firestore';
 
 export default function Body() {
     const { openLoginModal } = useLogin();
+    const { openDetailModal } = useDetail();
     const [openFilters, setOpenFilters] = useState<Boolean>(false);
     const [appliedFilters, setAppliedFilters] = useState<String[]>([]);
+    const [jobCard, setJobCard] = useState<JobType[]>();
 
+    const jobsCollectionRef = collection(db, "jobs")
+
+    const getJobList = async () => {
+        try {
+            const data = await getDocs(jobsCollectionRef);
+            const filteredData: JobType[] = data.docs.map((doc) => {
+                const d = doc.data()
+                return { id: doc.id, ...d } as JobType;
+            })
+            setJobCard(filteredData);
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        getJobList();
+    })
 
     return (
     <div className='bg-white dark:bg-black h-lvh overflow-y-auto w-dvw text-black dark:text-white px-2 lg: pt-15'>
 
         {openFilters ? <Modal type='Filter' appliedFilters={appliedFilters} setAppliedFilters={setAppliedFilters} setOpenFilters={setOpenFilters}/> : null}
         {openLoginModal ? <Modal type='Login'/> : null}
+        {openDetailModal ? <Modal type='Detail'/> : null}
 
         {/* Filter Section */}
         <span className='grid justify-end mb-2'>
@@ -23,16 +49,12 @@ export default function Body() {
             </button>
         </span>
         {/* Content Section */}
-        <span>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente et dicta nostrum ratione qui ut architecto repudiandae perferendis dolorum eveniet accusamus aut dignissimos inventore, sed rem laudantium asperiores voluptates quam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure quo aliquam omnis facere magni minima expedita. Repellendus adipisci modi praesentium! Eius facilis praesentium veniam voluptas. Dignissimos eos expedita reiciendis! Quis.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus libero, velit autem officia recusandae harum reiciendis, voluptate quae, tenetur itaque nesciunt dicta. Voluptatem cum doloremque repellat nesciunt distinctio quibusdam placeat.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente et dicta nostrum ratione qui ut architecto repudiandae perferendis dolorum eveniet accusamus aut dignissimos inventore, sed rem laudantium asperiores voluptates quam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure quo aliquam omnis facere magni minima expedita. Repellendus adipisci modi praesentium! Eius facilis praesentium veniam voluptas. Dignissimos eos expedita reiciendis! Quis.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus libero, velit autem officia recusandae harum reiciendis, voluptate quae, tenetur itaque nesciunt dicta. Voluptatem cum doloremque repellat nesciunt distinctio quibusdam placeat.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente et dicta nostrum ratione qui ut architecto repudiandae perferendis dolorum eveniet accusamus aut dignissimos inventore, sed rem laudantium asperiores voluptates quam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure quo aliquam omnis facere magni minima expedita. Repellendus adipisci modi praesentium! Eius facilis praesentium veniam voluptas. Dignissimos eos expedita reiciendis! Quis.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus libero, velit autem officia recusandae harum reiciendis, voluptate quae, tenetur itaque nesciunt dicta. Voluptatem cum doloremque repellat nesciunt distinctio quibusdam placeat.
+        <span className='flex gap-1 flex-wrap'>
+            { 
+                jobCard && jobCard.length > 0 ? jobCard.map((job, index) => {
+                    return <JobCard job={job} key={index}/>
+                }) : null
+            }
         </span>
     </div>
     )

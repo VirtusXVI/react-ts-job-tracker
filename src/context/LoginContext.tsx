@@ -24,7 +24,7 @@ export const LoginProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 export const useLogin = (): LoginContextType => {
   const context = useContext(LoginContext);
   if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
+    throw new Error('useLogin must be used within a LoginProvider');
   }
   return context;
 };
