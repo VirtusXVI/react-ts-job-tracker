@@ -6,6 +6,7 @@ import type { JobType } from '../../types/JobType';
 import JobCard from './JobCard';
 import { db } from '../../firebase';
 import { getDocs, collection } from 'firebase/firestore';
+import NewJob from './NewJob';
 
 export default function Body() {
     const { openLoginModal } = useLogin();
@@ -55,6 +56,7 @@ export default function Body() {
                     return <JobCard job={job} key={index}/>
                 }) : null
             }
+            <NewJob />
         </span>
     </div>
     )

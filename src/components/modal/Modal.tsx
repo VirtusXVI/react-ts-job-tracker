@@ -1,6 +1,7 @@
 import FilterModal from "./FilterModal";
 import JobDesctiptionDetail from "./JobDesctiptionDetail";
 import LoginModal from "./LoginModal";
+import AddNewJob from "./AddNewJob";
 
 type ModalProps = {
   type: string;
@@ -13,6 +14,7 @@ export default function Modal(props: ModalProps) {
     const { type, appliedFilters, setAppliedFilters, setOpenFilters } = props;
 
     const functionBody = () => {
+
         switch (type) {
             case 'Filter':
                 return <FilterModal type='Filter' appliedFilters={appliedFilters ?? []} setOpenFilters={setOpenFilters ?? (() => {})} setAppliedFilters={setAppliedFilters ?? (() => {})}/>
@@ -22,6 +24,9 @@ export default function Modal(props: ModalProps) {
             break;
             case 'Detail':
                 return <JobDesctiptionDetail type='Detail'/>;
+            break;
+            case 'Add':
+                return <AddNewJob type='Add'/>;
             break;
         }
     };

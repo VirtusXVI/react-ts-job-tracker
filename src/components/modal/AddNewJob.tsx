@@ -1,8 +1,7 @@
-import type { JobType } from "../../types/JobType";
 import { useDetail } from "../../context/DetailContext";
 import { useState } from "react";
 
-export default function JobDesctiptionDetail(props: {type: String}) {
+export default function AddNewJob(props: {type: String}) {
     const { type } = props
     const { toggleDetail, j } = useDetail();
     const [company, setCompany] = useState<string | undefined>(j?.company)
@@ -46,14 +45,9 @@ export default function JobDesctiptionDetail(props: {type: String}) {
                                     <button type="button" onClick={() => toggleDetail(j)} className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs sm:w-auto">
                                         Cancel
                                     </button>
-                                    { type == 'Detail' ? 
-                                        <button type="submit" className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs sm:w-auto">
-                                            Confirm
-                                        </button> :  
-                                        <button type="submit" className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs sm:w-auto">
-                                            Create
-                                        </button>
-                                    }
+                                    <button type="submit" className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs sm:w-auto">
+                                        Confirm
+                                    </button>
                                 </div>
                             </form>
                         </div>
